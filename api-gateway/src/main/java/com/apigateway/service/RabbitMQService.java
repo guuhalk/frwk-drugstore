@@ -10,8 +10,9 @@ public class RabbitMQService {
 	@Autowired
 	private RabbitTemplate rabbitMQTemplate;
 	
+	
 	public void sendMenssage(String nameQueue, Object menssage) {
-		
+		this.rabbitMQTemplate.convertAndSend(nameQueue, menssage);
 	}
 
 }

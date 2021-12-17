@@ -1,0 +1,4 @@
+dto\UserDTO.class
+model\UserType.class
+constants\RabbitMQConstants.class
+model\Address.class

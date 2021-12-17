@@ -2,6 +2,8 @@ package com.msuser.dto;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 
@@ -40,4 +42,12 @@ public class UserDTO {
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(user, UserDTO.class);	
 	}
+	
+	public List<UserDTO> toCollectionModel(List<User> users) {
+		ModelMapper modelMapper = new ModelMapper();
+		return users.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+	}
+	
+	
+	
 }

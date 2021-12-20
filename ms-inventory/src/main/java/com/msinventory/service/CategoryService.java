@@ -1,8 +1,9 @@
 package com.msinventory.service;
 
+import java.time.OffsetDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.msinventory.exception.EntityAlreadyExistsException;
@@ -22,16 +23,23 @@ public class CategoryService {
 			throw new EntityAlreadyExistsException("Category already exists");
 		}
 		
+		if(category.getCreatedAt() == null) {
+			category.setCreatedAt(OffsetDateTime.now());
+		}
+		
+		category.setUpdatedAt(OffsetDateTime.now());
+		
 		return categoryRepository.save(category);
 	}
 	
 	public void remove(String idCategory) {
+		if(!categoryRepository.existsById(idCategory)) {
+			throw new EntityNotFoundException("Category not found");
+		}
+		
 		try {
 			categoryRepository.deleteById(idCategory);
 		
-		} catch (EmptyResultDataAccessException e) {
-			throw new EntityNotFoundException("Category not found");
-			
 		} catch (DataIntegrityViolationException e) {
 			throw new EntityInUseException("Category can't be removed.");
 		}

@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apigateway.dto.UserDTO;
+
 import com.apigateway.service.RabbitMQService;
 
 import constants.RabbitMQConstants;
+import dto.UserDTO;
 
 @RestController
 @RequestMapping(value = "user")

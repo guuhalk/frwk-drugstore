@@ -36,6 +36,7 @@ public class RabbitMQConection {
 	@PostConstruct
 	private void add() {
 		Queue queueUser = this.queue(RabbitMQConstants.QUEUE_USER);
+		Queue queueUserReturn = this.queue(RabbitMQConstants.QUEUE_USER_RETURN);
 		Queue queueCategory = this.queue(RabbitMQConstants.QUEUE_CATEGORY);
 		Queue queuePharmacies = this.queue(RabbitMQConstants.QUEUE_PHARMACIES);
 		Queue queueFinancialInstitutions = this.queue(RabbitMQConstants.QUEUE_FINANCIAL_INSTITUTIONS);
@@ -55,6 +56,7 @@ public class RabbitMQConection {
 		
 		
 		amqpAdmin.declareQueue(queueUser);
+		amqpAdmin.declareQueue(queueUserReturn);
 		amqpAdmin.declareQueue(queueCategory);
 		amqpAdmin.declareQueue(queuePharmacies);
 		amqpAdmin.declareQueue(queueFinancialInstitutions);

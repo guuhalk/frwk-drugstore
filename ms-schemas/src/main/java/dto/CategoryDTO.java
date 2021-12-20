@@ -1,4 +1,4 @@
-package com.msinventory.dto;
+package dto;
 
 import java.time.OffsetDateTime;
 

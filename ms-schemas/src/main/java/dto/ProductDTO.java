@@ -1,13 +1,11 @@
-package com.msinventory.dto;
+package dto;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import com.msinventory.model.Category;
-import com.msinventory.model.enumeration.ProductStatus;
-
 import lombok.Getter;
 import lombok.Setter;
+import model.enumeration.ProductStatus;
 
 @Getter
 @Setter
@@ -29,7 +27,7 @@ public class ProductDTO {
 	
 	private ProductStatus status;
 	
-	private Category category;
+	private CategoryDTO categoryDTO;
 	
 	private OffsetDateTime createdAt;
 	

@@ -7,8 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.msinventory.dto.CategoryDTO;
 import com.msinventory.model.Category;
+
+import dto.CategoryDTO;
 
 @Component
 public class CategoryConverter {

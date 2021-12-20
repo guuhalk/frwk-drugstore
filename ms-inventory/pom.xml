@@ -57,6 +57,11 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.ms-schemas</groupId>
+			<artifactId>ms-schemas</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

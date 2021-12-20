@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.msinventory.converter.CategoryConverter;
-import com.msinventory.dto.CategoryDTO;
 import com.msinventory.model.Category;
 import com.msinventory.repository.CategoryRepository;
 import com.msinventory.service.CategoryService;
+
+import dto.CategoryDTO;
 
 @RestController
 @RequestMapping("/categories")

@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.msinventory.converter.ProductConverter;
-import com.msinventory.dto.ProductDTO;
 import com.msinventory.model.Product;
 import com.msinventory.repository.ProductRepository;
 import com.msinventory.service.ProductService;
+
+import dto.ProductDTO;
 
 @RestController
 @RequestMapping("/products")

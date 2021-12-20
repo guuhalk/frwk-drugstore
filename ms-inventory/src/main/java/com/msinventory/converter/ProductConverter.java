@@ -7,8 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.msinventory.dto.ProductDTO;
 import com.msinventory.model.Product;
+
+import dto.ProductDTO;
 
 @Component
 public class ProductConverter {

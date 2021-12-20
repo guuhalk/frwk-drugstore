@@ -11,8 +11,8 @@ public class RabbitMQService {
 	private RabbitTemplate rabbitMQTemplate;
 	
 	
-	public void sendMenssage(String nameQueue, Object menssage) {
-		this.rabbitMQTemplate.convertAndSend(nameQueue, menssage);
+	public Object sendMenssage(String nameQueue, Object menssage) {
+		return rabbitMQTemplate.convertSendAndReceive(nameQueue, menssage);
 	}
 
 }

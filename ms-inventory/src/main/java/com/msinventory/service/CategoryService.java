@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.msinventory.exception.EntityAlreadyExistsException;
-import com.msinventory.exception.EntityInUseException;
-import com.msinventory.exception.EntityNotFoundException;
 import com.msinventory.model.Category;
 import com.msinventory.repository.CategoryRepository;
+
+import exception.EntityAlreadyExistsException;
+import exception.EntityInUseException;
+import exception.EntityNotFoundException;
 
 @Service
 public class CategoryService {

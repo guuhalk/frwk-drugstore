@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 
 import constants.RabbitMQConstants;
 
-
-
 @Component
 public class RabbitMQConection {
 	

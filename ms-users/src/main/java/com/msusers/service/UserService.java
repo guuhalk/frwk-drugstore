@@ -1,5 +1,7 @@
 package com.msusers.service;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.msusers.converter.UserConverter;
 import com.msusers.model.User;
 import com.msusers.repository.UserRepository;
 
@@ -23,6 +26,17 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private UserConverter userConverter;
+	
+	public List<User> getAll() {
+		return userRepository.findAll();
+	}
+	
+	public User findById(Long idUser) {
+		return getOrThrowException(idUser);
+	}
+	
 	public User create(User user) {
 		if(isEmailOrCpfAlreadyInUse(user.getEmail(), user.getCpf(), user.getId())) {
 			throw new GenericException("This Email and/or CPF is already in use");
@@ -33,6 +47,13 @@ public class UserService {
 		}
 		
 		return userRepository.save(user);
+	}
+	
+	public User update(Long idUser, User userInput) {
+		User storedUser = getOrThrowException(idUser);
+		userConverter.updateEntity(userInput, storedUser);
+		
+		return create(storedUser);
 	}
 	
 	public void changePassword(Long idUser, String currentPassword, String newPassword) {

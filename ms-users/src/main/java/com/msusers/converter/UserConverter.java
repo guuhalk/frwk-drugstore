@@ -34,4 +34,8 @@ public class UserConverter {
 	public void copyToEntity(UserDTO userDTO, User user) {
 		modelMapper.map(userDTO, user);
 	}
+	
+	public void updateEntity(User sourceUser, User destinationUser) {
+		modelMapper.map(sourceUser, destinationUser);
+	}
 }

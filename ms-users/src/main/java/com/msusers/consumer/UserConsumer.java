@@ -4,31 +4,48 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.msuser.service.UserService;
+
 import constants.RabbitMQConstants;
-import dto.UserDTO;
+import model.Request;
+import model.Response;
 
 @Component
 public class UserConsumer {
 
 	@Autowired
-	private RabbitTemplate rabbitMQTemplate;
-	
-	
-	public void sendMenssage(String nameQueue, Object menssage) {
-		this.rabbitMQTemplate.convertAndSend(nameQueue, menssage);
-	}
+	private UserService userService;
 	
 	@RabbitListener(queues = RabbitMQConstants.QUEUE_USER)
-	private UserDTO consummer(UserDTO userDTO) throws IOException, InterruptedException, TimeoutException {
-		System.out.println("===========================");
-		System.out.println("Request");
-		System.out.println("Nome:".concat(userDTO.getName()));
-		System.out.println("===========================");
+	private Object consummer(Request request) throws IOException, InterruptedException, TimeoutException {
+
+		Response response = new Response();
 		
+		switch (request.getNameRequest()) {
+		case "getAll":
+			
+			break;
+		
+<<<<<<< HEAD:ms-users/src/main/java/com/msusers/consumer/UserConsumer.java
 		return userDTO;
+=======
+		case "alterUser":
+			
+			break;
+		case "saveUser":
+			
+			break;
+			
+
+		default:
+			break;
+		}
+		
+		return response;
+
+>>>>>>> f6cffbfe678da59c74e31781187aa9ae1e7547d5:ms-user/src/main/java/com/msuser/consumer/UserConsumer.java
 	}
 }

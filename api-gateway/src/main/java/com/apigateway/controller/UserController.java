@@ -11,6 +11,7 @@ import com.apigateway.service.RabbitMQService;
 
 import constants.RabbitMQConstants;
 import dto.UserDTO;
+import model.Request;
 
 @RestController
 @RequestMapping(value = "user")
@@ -21,7 +22,8 @@ public class UserController {
 
 	@PutMapping
 	public ResponseEntity<Object> alterUser(@RequestBody UserDTO userDto) {
-		Object user = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, userDto);
+		Request menssage = new Request("alterUser",userDto);
+		Object user = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
 		return ResponseEntity.ok(user);
 	}
 

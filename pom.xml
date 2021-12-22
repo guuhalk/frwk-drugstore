@@ -27,6 +27,7 @@
 		<module>ms-inventory</module>
 		<module>api-gateway</module>
 		<module>auth-server</module>
+		<module>ms-drugstores</module>
 	</modules>
 
 	<dependencies>

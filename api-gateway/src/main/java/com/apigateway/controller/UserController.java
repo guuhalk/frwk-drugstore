@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apigateway.service.RabbitMQService;
+import com.msschemas.constants.UserMethods;
+import com.msschemas.dto.UserWithPassWordDTO;
+import com.msschemas.model.Request;
+import com.msschemas.model.Response;
 
 import constants.RabbitMQConstants;
-import constants.UserMethods;
 import dto.UserDTO;
-import dto.UserWithPassWordDTO;
-import model.Request;
-import model.Response;
 
 @RestController
 @RequestMapping("/users")

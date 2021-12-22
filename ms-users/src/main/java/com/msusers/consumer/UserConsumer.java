@@ -6,18 +6,17 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.msschemas.constants.RabbitMQConstants;
+import com.msschemas.constants.UserMethods;
+import com.msschemas.dto.UserDTO;
+import com.msschemas.exception.EntityInUseException;
+import com.msschemas.exception.EntityNotFoundException;
+import com.msschemas.exception.GenericException;
+import com.msschemas.model.Request;
+import com.msschemas.model.Response;
 import com.msusers.converter.UserConverter;
 import com.msusers.model.User;
 import com.msusers.service.UserService;
-
-import constants.RabbitMQConstants;
-import constants.UserMethods;
-import dto.UserDTO;
-import exception.EntityInUseException;
-import exception.EntityNotFoundException;
-import exception.GenericException;
-import model.Request;
-import model.Response;
 
 @Component
 public class UserConsumer {

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import dto.UserWithPassWordDTO;
+import com.msschemas.dto.UserWithPassWordDTO;
 
 @FeignClient(value = "user", url="http://localhost:8083")
 public interface UserClient {

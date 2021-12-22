@@ -18,8 +18,7 @@ import com.msinventory.converter.CategoryConverter;
 import com.msinventory.model.Category;
 import com.msinventory.repository.CategoryRepository;
 import com.msinventory.service.CategoryService;
-
-import dto.CategoryDTO;
+import com.msschemas.dto.CategoryDTO;
 
 @RestController
 @RequestMapping("/categories")

@@ -18,8 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.msschemas.dto.UserWithPassWordDTO;
 
-import dto.UserWithPassWordDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

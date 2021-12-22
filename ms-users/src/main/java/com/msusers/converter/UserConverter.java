@@ -7,10 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.msschemas.dto.UserDTO;
+import com.msschemas.dto.UserWithPassWordDTO;
 import com.msusers.model.User;
-
-import dto.UserDTO;
-import dto.UserWithPassWordDTO;
 
 @Component
 public class UserConverter {

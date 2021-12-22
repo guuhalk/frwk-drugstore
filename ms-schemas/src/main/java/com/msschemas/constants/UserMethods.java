@@ -1,4 +1,4 @@
-package constants;
+package com.msschemas.constants;
 
 public class UserMethods {
 

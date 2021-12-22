@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.msinventory.model.Category;
-
-import dto.CategoryDTO;
+import com.msschemas.dto.CategoryDTO;
 
 @Component
 public class CategoryConverter {

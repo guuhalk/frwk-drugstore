@@ -4,8 +4,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import model.Request;
-import model.Response;
+import com.msschemas.model.Request;
+import com.msschemas.model.Response;
 
 @Service
 public class RabbitMQService {

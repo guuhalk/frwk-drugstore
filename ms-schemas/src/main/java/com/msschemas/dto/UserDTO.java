@@ -1,14 +1,14 @@
-package dto;
+package com.msschemas.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.msschemas.model.enumeration.UserType;
 
 import lombok.Getter;
 import lombok.Setter;
-import model.enumeration.UserType;
  
 @Getter
 @Setter

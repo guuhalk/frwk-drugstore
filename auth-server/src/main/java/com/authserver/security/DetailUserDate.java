@@ -7,7 +7,8 @@ import java.util.Optional;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import dto.UserWithPassWordDTO;
+import com.msschemas.dto.UserWithPassWordDTO;
+
 import lombok.AllArgsConstructor;
 
 @SuppressWarnings("serial")

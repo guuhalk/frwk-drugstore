@@ -9,15 +9,14 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.msschemas.dto.UserDTO;
+import com.msschemas.dto.UserWithPassWordDTO;
+import com.msschemas.exception.EntityInUseException;
+import com.msschemas.exception.EntityNotFoundException;
+import com.msschemas.exception.GenericException;
 import com.msusers.converter.UserConverter;
 import com.msusers.model.User;
 import com.msusers.repository.UserRepository;
-
-import dto.UserDTO;
-import dto.UserWithPassWordDTO;
-import exception.EntityInUseException;
-import exception.EntityNotFoundException;
-import exception.GenericException;
 
 @Service
 public class UserService {

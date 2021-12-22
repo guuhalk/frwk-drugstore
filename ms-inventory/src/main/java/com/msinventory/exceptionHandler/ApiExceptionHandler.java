@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import exception.EntityAlreadyExistsException;
-import exception.EntityInUseException;
-import exception.EntityNotFoundException;
-import exception.GenericException;
+import com.msschemas.exception.EntityAlreadyExistsException;
+import com.msschemas.exception.EntityInUseException;
+import com.msschemas.exception.EntityNotFoundException;
+import com.msschemas.exception.GenericException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {

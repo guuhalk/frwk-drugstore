@@ -1,4 +1,4 @@
-package dto;
+package com.msschemas.dto;
 
 import java.time.OffsetDateTime;
 

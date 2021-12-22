@@ -18,8 +18,7 @@ import com.msinventory.converter.ProductConverter;
 import com.msinventory.model.Product;
 import com.msinventory.repository.ProductRepository;
 import com.msinventory.service.ProductService;
-
-import dto.ProductDTO;
+import com.msschemas.dto.ProductDTO;
 
 @RestController
 @RequestMapping("/products")

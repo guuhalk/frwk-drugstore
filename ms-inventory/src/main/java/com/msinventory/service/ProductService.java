@@ -9,10 +9,9 @@ import org.springframework.stereotype.Service;
 import com.msinventory.model.Category;
 import com.msinventory.model.Product;
 import com.msinventory.repository.ProductRepository;
-
-import exception.EntityAlreadyExistsException;
-import exception.EntityInUseException;
-import exception.EntityNotFoundException;
+import com.msschemas.exception.EntityAlreadyExistsException;
+import com.msschemas.exception.EntityInUseException;
+import com.msschemas.exception.EntityNotFoundException;
 
 @Service
 public class ProductService {

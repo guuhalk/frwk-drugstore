@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.msschemas.dto.UserWithPassWordDTO;
 import com.msusers.service.UserService;
-
-import dto.UserWithPassWordDTO;
 
 @RestController
 @RequestMapping("/users")

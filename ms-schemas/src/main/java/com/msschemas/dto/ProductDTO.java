@@ -1,11 +1,12 @@
-package dto;
+package com.msschemas.dto;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+import com.msschemas.model.enumeration.ProductStatus;
+
 import lombok.Getter;
 import lombok.Setter;
-import model.enumeration.ProductStatus;
 
 @Getter
 @Setter

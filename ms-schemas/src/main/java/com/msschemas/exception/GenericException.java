@@ -1,4 +1,4 @@
-package exception;
+package com.msschemas.exception;
 
 public class GenericException extends RuntimeException {
 

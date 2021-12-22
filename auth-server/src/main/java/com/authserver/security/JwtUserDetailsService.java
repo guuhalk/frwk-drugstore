@@ -10,8 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.authserver.client.UserClient;
-
-import dto.UserWithPassWordDTO;
+import com.msschemas.dto.UserWithPassWordDTO;
 
 @Component
 public class JwtUserDetailsService implements UserDetailsService {

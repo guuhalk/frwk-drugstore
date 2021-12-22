@@ -1,13 +1,11 @@
 package com.apigateway.service;
 
-import java.util.List;
-
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import model.Request;
-
+import model.Response;
 
 @Service
 public class RabbitMQService {
@@ -15,17 +13,12 @@ public class RabbitMQService {
 	@Autowired
 	private RabbitTemplate rabbitMQTemplate;
 	
-	
-	public Object sendMenssage(String nameQueue, Request menssage) {
-		return rabbitMQTemplate.convertSendAndReceive(nameQueue, menssage);
+	public Response sendMenssage(String nameQueue, Request menssage) {
+		return (Response) rabbitMQTemplate.convertSendAndReceive(nameQueue, menssage);
 	}
 	
-	public Object sendMenssage(String nameQueue) {
-		return rabbitMQTemplate.convertSendAndReceive(nameQueue);
+	public Response sendMenssage(String nameQueue) {
+		return (Response) rabbitMQTemplate.convertSendAndReceive(nameQueue);
 	}
 	
-	public List<Object> sendListMenssage(String nameQueue) {
-		return (List<Object>) rabbitMQTemplate.convertSendAndReceive(nameQueue);
-	}
-
 }

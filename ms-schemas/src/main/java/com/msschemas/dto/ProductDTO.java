@@ -1,5 +1,6 @@
 package com.msschemas.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
@@ -10,7 +11,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductDTO {
+public class ProductDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String id;
 	
@@ -28,7 +31,7 @@ public class ProductDTO {
 	
 	private ProductStatus status;
 	
-	private CategoryDTO categoryDTO;
+	private CategoryDTO category;
 	
 	private OffsetDateTime createdAt;
 	

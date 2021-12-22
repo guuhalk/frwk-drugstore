@@ -18,7 +18,7 @@
 	<packaging>pom</packaging>
 	
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
 	
 	<modules>
@@ -27,6 +27,7 @@
 		<module>ms-inventory</module>
 		<module>api-gateway</module>
 		<module>auth-server</module>
+		<module>ms-drugstores</module>
 	</modules>
 
 	<dependencies>

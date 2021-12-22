@@ -5,7 +5,6 @@ import java.util.Arrays;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,7 @@ import constants.UserMethods;
 import dto.UserDTO;
 import dto.UserWithPassWordDTO;
 import model.Request;
+import model.Response;
 
 @RestController
 @RequestMapping("/users")
@@ -32,43 +32,43 @@ public class UserController {
 	private RabbitMQService rabbitMqService;
 
 	@GetMapping
-	public ResponseEntity<Object> getAll() {
+	public ResponseEntity<?> getAll() {
 		Request menssage = new Request(UserMethods.GET_ALL);
-		Object user = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
-		
-		return ResponseEntity.ok(user);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+
+		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
 	@GetMapping("/{idUser}")
-	public ResponseEntity<Object> findById(@PathVariable Long idUser) {
+	public ResponseEntity<?> findById(@PathVariable Long idUser) {
 		Request menssage = new Request(UserMethods.FIND_BY_ID, Arrays.asList(idUser.toString()));
-		Object user = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
-		
-		return ResponseEntity.ok(user);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+
+		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Object> create(@RequestBody @Valid UserWithPassWordDTO userWithPassWordDTO) {
+	public ResponseEntity<?> create(@RequestBody @Valid UserWithPassWordDTO userWithPassWordDTO) {
 		Request menssage = new Request(UserMethods.CREATE, userWithPassWordDTO);
-		Object user = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
 	
-		return ResponseEntity.status(HttpStatus.CREATED).body(user);
+		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
 	@PutMapping("/{idUser}")
-	public ResponseEntity<Object> update(@PathVariable Long idUser, @RequestBody @Valid UserDTO userDto) {
+	public ResponseEntity<?> update(@PathVariable Long idUser, @RequestBody @Valid UserDTO userDto) {
 		Request menssage = new Request(UserMethods.UPDATE, userDto, Arrays.asList(idUser.toString()));
-		Object user = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
 	
-		return ResponseEntity.ok(user);
+		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
 	@DeleteMapping("/{idUser}")
 	public ResponseEntity<?> delete(@PathVariable Long idUser) {
 		Request menssage = new Request(UserMethods.DELETE, Arrays.asList(idUser.toString()));
-		this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
-	
-		return ResponseEntity.noContent().build();
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		
+		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
 }

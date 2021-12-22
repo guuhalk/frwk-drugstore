@@ -2,8 +2,6 @@ package com.msusers.service;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,7 +12,9 @@ import com.msusers.converter.UserConverter;
 import com.msusers.model.User;
 import com.msusers.repository.UserRepository;
 
+import dto.UserDTO;
 import exception.EntityInUseException;
+import exception.EntityNotFoundException;
 import exception.GenericException;
 
 @Service
@@ -49,9 +49,11 @@ public class UserService {
 		return userRepository.save(user);
 	}
 	
-	public User update(Long idUser, User userInput) {
+	public User update(Long idUser, UserDTO userDTO) {
 		User storedUser = getOrThrowException(idUser);
-		userConverter.updateEntity(userInput, storedUser);
+		userDTO.setId(idUser);
+		userDTO.setCreatedAt(storedUser.getCreatedAt());
+		userConverter.copyToEntity(userDTO, storedUser);
 		
 		return create(storedUser);
 	}

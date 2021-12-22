@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
-import model.Address;
-import model.UserType;
-
+import model.enumeration.UserType;
  
 @Getter
 @Setter
 public class UserDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	
@@ -29,9 +29,9 @@ public class UserDTO implements Serializable {
 	
 	private UserType userType;
 	
-	private Address address;
+	private AddressDTO address;
 	
 	private OffsetDateTime createdAt;
 	
-	private OffsetDateTime updatedAt; 
+	private OffsetDateTime updatedAt;
 }

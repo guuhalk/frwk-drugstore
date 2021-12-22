@@ -7,15 +7,14 @@ import java.util.Optional;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.authserver.model.User;
-
+import dto.UserWithPassWordDTO;
 import lombok.AllArgsConstructor;
 
 @SuppressWarnings("serial")
 @AllArgsConstructor
 public class DetailUserDate implements UserDetails {
 
-	private final Optional<User> user;
+	private final Optional<UserWithPassWordDTO> user;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -24,12 +23,12 @@ public class DetailUserDate implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return user.orElse(new User()).getPassword();
+		return user.orElse(new UserWithPassWordDTO()).getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return user.orElse(new User()).getCpf();
+		return user.orElse(new UserWithPassWordDTO()).getCpf();
 	}
 
 	@Override

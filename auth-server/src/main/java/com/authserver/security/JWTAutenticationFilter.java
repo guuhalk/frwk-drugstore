@@ -17,9 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.authserver.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dto.UserWithPassWordDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -35,7 +35,7 @@ public class JWTAutenticationFilter extends UsernamePasswordAuthenticationFilter
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		try {
 			
-			User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+			UserWithPassWordDTO user = new ObjectMapper().readValue(request.getInputStream(), UserWithPassWordDTO.class);
 			
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getCpf(), user.getPassword(), new ArrayList<>()));
 		} catch (IOException e) {

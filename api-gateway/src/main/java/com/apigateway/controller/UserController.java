@@ -30,13 +30,7 @@ public class UserController {
 
 	@Autowired
 	private RabbitMQService rabbitMqService;
-
-	@PutMapping
-	public ResponseEntity<Object> alterUser(@RequestBody UserDTO userDto) {
-		Request menssage = new Request("alterUser",userDto);
-		Response user = (Response) this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
-		return ResponseEntity.ok(user);
-    
+	
 	@GetMapping
 	public ResponseEntity<?> getAll() {
 		Request menssage = new Request(UserMethods.GET_ALL);

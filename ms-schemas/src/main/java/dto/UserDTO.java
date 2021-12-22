@@ -14,7 +14,7 @@ import model.enumeration.UserType;
 @Setter
 public class UserDTO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7835379498195684748L;
 
 	private Long id;
 	

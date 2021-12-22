@@ -1,6 +1,7 @@
 package com.msusers.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,6 +14,7 @@ import com.msusers.model.User;
 import com.msusers.repository.UserRepository;
 
 import dto.UserDTO;
+import dto.UserWithPassWordDTO;
 import exception.EntityInUseException;
 import exception.EntityNotFoundException;
 import exception.GenericException;
@@ -35,6 +37,11 @@ public class UserService {
 	
 	public User findById(Long idUser) {
 		return getOrThrowException(idUser);
+	}
+	
+	public UserWithPassWordDTO getUserLogin(String cpf) {
+		Optional<User> userFound = userRepository.findFirstByCpf(cpf);
+		return userFound == null ? null : userConverter.toDtoWithPassWord(userFound.get());
 	}
 	
 	public User create(User user) {
@@ -92,4 +99,6 @@ public class UserService {
 		
 		return userRepository.existsByEmailOrCpf(userEmail, userCpf);
 	}
+	
+	
 }

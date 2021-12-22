@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.msusers.model.User;
 
 import dto.UserDTO;
+import dto.UserWithPassWordDTO;
 
 @Component
 public class UserConverter {
@@ -38,4 +39,8 @@ public class UserConverter {
 	public void updateEntity(User sourceUser, User destinationUser) {
 		modelMapper.map(sourceUser, destinationUser);
 	}
+	
+	public UserWithPassWordDTO toDtoWithPassWord(User user) {
+ 		return modelMapper.map(user, UserWithPassWordDTO.class);
+ 	}
 }

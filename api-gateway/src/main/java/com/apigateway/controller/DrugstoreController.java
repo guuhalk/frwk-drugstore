@@ -24,8 +24,8 @@ import com.msschemas.model.Request;
 import com.msschemas.model.Response;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/drugstores")
+public class DrugstoreController {
 
 	@Autowired
 	private RabbitMQService rabbitMqService;
@@ -33,16 +33,15 @@ public class UserController {
 	@GetMapping
 	public ResponseEntity<?> getAll() {
 		Request menssage = new Request(DefaultMethods.GET_ALL);
-		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
-
 	}
 	
 	@GetMapping("/{idUser}")
 	public ResponseEntity<?> findById(@PathVariable Long idUser) {
 		Request menssage = new Request(DefaultMethods.FIND_BY_ID, Arrays.asList(idUser.toString()));
-		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
@@ -50,7 +49,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody @Valid UserWithPassWordDTO userWithPassWordDTO) {
 		Request menssage = new Request(DefaultMethods.CREATE, userWithPassWordDTO);
-		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 	
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
@@ -58,7 +57,7 @@ public class UserController {
 	@PutMapping("/{idUser}")
 	public ResponseEntity<?> update(@PathVariable Long idUser, @RequestBody @Valid UserDTO userDto) {
 		Request menssage = new Request(DefaultMethods.UPDATE, userDto, Arrays.asList(idUser.toString()));
-		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 	
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
@@ -66,9 +65,8 @@ public class UserController {
 	@DeleteMapping("/{idUser}")
 	public ResponseEntity<?> delete(@PathVariable Long idUser) {
 		Request menssage = new Request(DefaultMethods.DELETE, Arrays.asList(idUser.toString()));
-		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 		
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
-	
 }

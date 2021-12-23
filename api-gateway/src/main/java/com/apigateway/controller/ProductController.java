@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apigateway.service.RabbitMQService;
-import com.msschemas.constants.ProductMethods;
+import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
 import com.msschemas.dto.ProductDTO;
 import com.msschemas.model.Request;
@@ -29,7 +29,7 @@ public class ProductController {
 	
 	@GetMapping
 	public ResponseEntity<?> getAll() {
-		Request request = new Request(ProductMethods.GET_ALL);
+		Request request = new Request(DefaultMethods.GET_ALL);
 		Response response = rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PRODUCTS, request);
 		
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
@@ -37,7 +37,7 @@ public class ProductController {
 	
 	@GetMapping("/{idProduct}")
 	public ResponseEntity<?> findById(@PathVariable String idProduct) {
-		Request request = new Request(ProductMethods.FIND_BY_ID, Arrays.asList(idProduct));
+		Request request = new Request(DefaultMethods.FIND_BY_ID, Arrays.asList(idProduct));
 		Response response = rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PRODUCTS, request);
 		
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
@@ -45,7 +45,7 @@ public class ProductController {
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody ProductDTO productDTO) {
-		Request request = new Request(ProductMethods.CREATE, productDTO);
+		Request request = new Request(DefaultMethods.CREATE, productDTO);
 		Response response = rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PRODUCTS, request);
 		
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
@@ -53,7 +53,7 @@ public class ProductController {
 	
 	@PutMapping("/{idProduct}")
 	public ResponseEntity<?> update(@PathVariable String idProduct, @RequestBody ProductDTO productDTO) {
-		Request request = new Request(ProductMethods.UPDATE, productDTO, Arrays.asList(idProduct));
+		Request request = new Request(DefaultMethods.UPDATE, productDTO, Arrays.asList(idProduct));
 		Response response = rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PRODUCTS, request);
 		
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
@@ -61,7 +61,7 @@ public class ProductController {
 	
 	@DeleteMapping("/{idProduct}")
 	public ResponseEntity<?> delete(@PathVariable String idProduct) {
-		Request request = new Request(ProductMethods.DELETE, Arrays.asList(idProduct));
+		Request request = new Request(DefaultMethods.DELETE, Arrays.asList(idProduct));
 		Response response = rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PRODUCTS, request);
 		
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());

@@ -1,6 +1,6 @@
 package com.msschemas.constants;
 
-public class UserMethods {
+public class DefaultMethods {
 
 	public static final String GET_ALL = "getAll";
 	public static final String FIND_BY_ID = "findById";

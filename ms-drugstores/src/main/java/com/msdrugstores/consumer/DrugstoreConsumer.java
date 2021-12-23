@@ -1,4 +1,4 @@
-package com.msinventory.consumer;
+package com.msdrugstores.consumer;
 
 import java.util.List;
 
@@ -6,12 +6,12 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.msinventory.converter.CategoryConverter;
-import com.msinventory.model.Category;
-import com.msinventory.service.CategoryService;
+import com.msdrugstores.converter.DrugstoreConverter;
+import com.msdrugstores.model.Drugstore;
+import com.msdrugstores.service.DrugstoreService;
 import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
-import com.msschemas.dto.CategoryDTO;
+import com.msschemas.dto.DrugstoreDTO;
 import com.msschemas.exception.EntityInUseException;
 import com.msschemas.exception.EntityNotFoundException;
 import com.msschemas.exception.GenericException;
@@ -19,15 +19,15 @@ import com.msschemas.model.Request;
 import com.msschemas.model.Response;
 
 @Component
-public class CategoryConsumer {
+public class DrugstoreConsumer {
 
 	@Autowired
-	private CategoryConverter categoryConverter;
+	private DrugstoreConverter drugstoreConverter;
 	
 	@Autowired
-	private CategoryService categoryService;
+	private DrugstoreService drugstoreService;
 	
-	@RabbitListener(queues = RabbitMQConstants.QUEUE_CATEGORY)
+	@RabbitListener(queues = RabbitMQConstants.QUEUE_PHARMACIES)
 	private Response consummer(Request request) {
 		Response response = new Response();
 		
@@ -35,31 +35,31 @@ public class CategoryConsumer {
 			String nameRequest = request.getNameRequest();
 			
 			if(DefaultMethods.GET_ALL.equals(nameRequest)) {
-				List<CategoryDTO> categoriesDTO = categoryConverter.toCollectionDto(categoryService.getAll());
-				response.setBody(categoriesDTO);
+				List<DrugstoreDTO> drugstoresDTO = drugstoreConverter.toCollectionDto(drugstoreService.getAll());
+				response.setBody(drugstoresDTO);
 				response.setResponseCode(200);
 				
 			} else if(DefaultMethods.FIND_BY_ID.equals(nameRequest)) {
-				String idCategory = request.getPathVariables().get(0);
-				response.setBody(categoryConverter.toDto(categoryService.findById(idCategory)));
+				Long idDrugstore = Long.valueOf(request.getPathVariables().get(0));
+				response.setBody(drugstoreConverter.toDto(drugstoreService.findById(idDrugstore)));
 				response.setResponseCode(200);
 				
 			} else if(DefaultMethods.CREATE.equals(nameRequest)) {
-				CategoryDTO categoryDTO = (CategoryDTO) request.getBody();
-				categoryDTO = categoryConverter.toDto(categoryService.create(categoryConverter.toEntity(categoryDTO)));
-				response.setBody(categoryDTO);
+				DrugstoreDTO drugstoreDTO = (DrugstoreDTO) request.getBody();
+				drugstoreDTO = drugstoreConverter.toDto(drugstoreService.create(drugstoreConverter.toEntity(drugstoreDTO)));
+				response.setBody(drugstoreDTO);
 				response.setResponseCode(201);
 				
 			} else if(DefaultMethods.UPDATE.equals(nameRequest)) {
-				CategoryDTO categoryDTO = (CategoryDTO) request.getBody();
-				String idCategory = request.getPathVariables().get(0);
-				Category category = categoryService.update(idCategory, categoryDTO);
-				response.setBody(categoryConverter.toDto(category));
+				DrugstoreDTO drugstoreDTO = (DrugstoreDTO) request.getBody();
+				Long idDrugtore = Long.valueOf(request.getPathVariables().get(0));
+				Drugstore drugstore = drugstoreService.update(idDrugtore, drugstoreDTO);
+				response.setBody(drugstoreConverter.toDto(drugstore));
 				response.setResponseCode(200);
 				
 			} else if(DefaultMethods.DELETE.equals(nameRequest)) {
-				String idCategory = request.getPathVariables().get(0);
-				categoryService.remove(idCategory);
+				Long idDrugstore = Long.valueOf(request.getPathVariables().get(0));
+				drugstoreService.remove(idDrugstore);
 				response.setResponseCode(204);
 			}
 			

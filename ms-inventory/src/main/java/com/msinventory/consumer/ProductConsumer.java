@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.msinventory.converter.ProductConverter;
 import com.msinventory.model.Product;
 import com.msinventory.service.ProductService;
-import com.msschemas.constants.ProductMethods;
+import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
 import com.msschemas.dto.ProductDTO;
 import com.msschemas.exception.EntityInUseException;
@@ -34,30 +34,30 @@ public class ProductConsumer {
 		try {
 			String nameRequest = request.getNameRequest();
 			
-			if(ProductMethods.GET_ALL.equals(nameRequest)) {
+			if(DefaultMethods.GET_ALL.equals(nameRequest)) {
 				List<ProductDTO> productsDTO = productConverter.toCollectionDto(productService.getAll());
 				response.setBody(productsDTO);
 				response.setResponseCode(200);
 				
-			} else if(ProductMethods.FIND_BY_ID.equals(nameRequest)) {
+			} else if(DefaultMethods.FIND_BY_ID.equals(nameRequest)) {
 				String idProduct = request.getPathVariables().get(0);
 				response.setBody(productConverter.toDto(productService.findById(idProduct)));
 				response.setResponseCode(200);
 				
-			} else if(ProductMethods.CREATE.equals(nameRequest)) {
+			} else if(DefaultMethods.CREATE.equals(nameRequest)) {
 				ProductDTO productDTO = (ProductDTO) request.getBody();
 				productDTO = productConverter.toDto(productService.create(productConverter.toEntity(productDTO)));
 				response.setBody(productDTO);
 				response.setResponseCode(201);
 				
-			} else if(ProductMethods.UPDATE.equals(nameRequest)) {
+			} else if(DefaultMethods.UPDATE.equals(nameRequest)) {
 				ProductDTO productDTO = (ProductDTO) request.getBody();
 				String idProduct = request.getPathVariables().get(0);
 				Product product = productService.update(idProduct, productDTO);
 				response.setBody(productConverter.toDto(product));
 				response.setResponseCode(200);
 				
-			} else if(ProductMethods.DELETE.equals(nameRequest)) {
+			} else if(DefaultMethods.DELETE.equals(nameRequest)) {
 				String idProduct = request.getPathVariables().get(0);
 				productService.remove(idProduct);
 				response.setResponseCode(204);

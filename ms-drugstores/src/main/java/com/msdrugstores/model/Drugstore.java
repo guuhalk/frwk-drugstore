@@ -1,6 +1,7 @@
 package com.msdrugstores.model;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -48,7 +49,7 @@ public class Drugstore {
 	
 	@ElementCollection
 	@CollectionTable(name = "drugstore_phones", joinColumns = @JoinColumn(name = "drugstore_id"))
-	private List<String> phones;
+	private List<String> phones = new ArrayList<>();
 	
 	@Embedded
 	private Address address;

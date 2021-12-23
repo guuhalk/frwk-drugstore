@@ -46,7 +46,8 @@ public class DrugstoreConsumer {
 				
 			} else if(DefaultMethods.CREATE.equals(nameRequest)) {
 				DrugstoreDTO drugstoreDTO = (DrugstoreDTO) request.getBody();
-				drugstoreDTO = drugstoreConverter.toDto(drugstoreService.create(drugstoreConverter.toEntity(drugstoreDTO)));
+				Drugstore drugstore = drugstoreService.create(drugstoreConverter.toEntity(drugstoreDTO));
+				drugstoreDTO = drugstoreConverter.toDto(drugstore);
 				response.setBody(drugstoreDTO);
 				response.setResponseCode(201);
 				

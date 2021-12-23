@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apigateway.service.RabbitMQService;
 import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
-import com.msschemas.dto.UserDTO;
-import com.msschemas.dto.UserWithPassWordDTO;
+import com.msschemas.dto.DrugstoreDTO;
 import com.msschemas.model.Request;
 import com.msschemas.model.Response;
 
@@ -38,33 +37,33 @@ public class DrugstoreController {
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
-	@GetMapping("/{idUser}")
-	public ResponseEntity<?> findById(@PathVariable Long idUser) {
-		Request menssage = new Request(DefaultMethods.FIND_BY_ID, Arrays.asList(idUser.toString()));
+	@GetMapping("/{idDrugstore}")
+	public ResponseEntity<?> findById(@PathVariable Long idDrugstore) {
+		Request menssage = new Request(DefaultMethods.FIND_BY_ID, Arrays.asList(idDrugstore.toString()));
 		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody @Valid UserWithPassWordDTO userWithPassWordDTO) {
-		Request menssage = new Request(DefaultMethods.CREATE, userWithPassWordDTO);
+	public ResponseEntity<?> create(@RequestBody @Valid DrugstoreDTO drugstoreDTO) {
+		Request menssage = new Request(DefaultMethods.CREATE, drugstoreDTO);
 		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 	
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
-	@PutMapping("/{idUser}")
-	public ResponseEntity<?> update(@PathVariable Long idUser, @RequestBody @Valid UserDTO userDto) {
-		Request menssage = new Request(DefaultMethods.UPDATE, userDto, Arrays.asList(idUser.toString()));
+	@PutMapping("/{idDrugstore}")
+	public ResponseEntity<?> update(@PathVariable Long idDrugstore, @RequestBody @Valid DrugstoreDTO drugstoreDTO) {
+		Request menssage = new Request(DefaultMethods.UPDATE, drugstoreDTO, Arrays.asList(idDrugstore.toString()));
 		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 	
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 		
-	@DeleteMapping("/{idUser}")
-	public ResponseEntity<?> delete(@PathVariable Long idUser) {
-		Request menssage = new Request(DefaultMethods.DELETE, Arrays.asList(idUser.toString()));
+	@DeleteMapping("/{idDrugstore}")
+	public ResponseEntity<?> delete(@PathVariable Long idDrugstore) {
+		Request menssage = new Request(DefaultMethods.DELETE, Arrays.asList(idDrugstore.toString()));
 		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, menssage);
 		
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());

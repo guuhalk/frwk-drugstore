@@ -28,7 +28,7 @@ import lombok.Getter;
 public class JWTAutenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	final AuthenticationManager authenticationManager;
-	static final int EXPIRE_TOKEN = 600_000; 
+	static final int EXPIRE_TOKEN = 6_000_000; 
 	static final String PASSWORD_TOKEN = "1130f66f-591f-4f1c-a748-f1f9a1c7c43a"; 
 
 	@Override

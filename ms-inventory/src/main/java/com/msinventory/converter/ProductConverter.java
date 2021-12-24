@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.msinventory.model.Category;
 import com.msinventory.model.Product;
 import com.msschemas.dto.ProductDTO;
 
@@ -31,6 +32,8 @@ public class ProductConverter {
 	}
 	
 	public void copyToEntity(ProductDTO productDTO, Product product) {
+		product.setCategory(new Category());
+		
 		modelMapper.map(productDTO, product);
 	}
 }

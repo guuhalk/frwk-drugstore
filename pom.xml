@@ -28,6 +28,7 @@
 		<module>api-gateway</module>
 		<module>auth-server</module>
 		<module>ms-drugstores</module>
+		<module>ms-financial</module>
 	</modules>
 
 	<dependencies>

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apigateway.service.RabbitMQService;
 import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
+import com.msschemas.constants.UserMethods;
+import com.msschemas.dto.PasswordInputDTO;
 import com.msschemas.dto.UserDTO;
 import com.msschemas.dto.UserWithPassWordDTO;
 import com.msschemas.model.Request;
@@ -58,6 +60,14 @@ public class UserController {
 	@PutMapping("/{idUser}")
 	public ResponseEntity<?> update(@PathVariable Long idUser, @RequestBody @Valid UserDTO userDto) {
 		Request menssage = new Request(DefaultMethods.UPDATE, userDto, Arrays.asList(idUser.toString()));
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+	
+		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
+	}
+	
+	@PutMapping("/{idUser}/password")
+	public ResponseEntity<?> update(@PathVariable Long idUser, @RequestBody @Valid PasswordInputDTO passwordInputDTO) {
+		Request menssage = new Request(UserMethods.CHANGE_PASSWORD, passwordInputDTO, Arrays.asList(idUser.toString()));
 		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
 	
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());

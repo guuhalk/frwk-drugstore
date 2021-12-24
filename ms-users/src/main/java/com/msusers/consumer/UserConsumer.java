@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
+import com.msschemas.constants.UserMethods;
+import com.msschemas.dto.PasswordInputDTO;
 import com.msschemas.dto.UserDTO;
 import com.msschemas.exception.EntityInUseException;
 import com.msschemas.exception.EntityNotFoundException;
@@ -56,6 +58,12 @@ public class UserConsumer {
 				User user = userService.update(idUser, userDTO);
 				response.setBody(userConverter.toDto(user));
 				response.setResponseCode(200);
+				
+			} else if(UserMethods.CHANGE_PASSWORD.equals(nameRequest)) {
+				PasswordInputDTO passwordDTO = (PasswordInputDTO) request.getBody();
+				Long idUser = Long.valueOf(request.getPathVariables().get(0));
+				userService.changePassword(idUser, passwordDTO.getCurrentPassword(), passwordDTO.getNewPassword());
+				response.setResponseCode(204);
 				
 			} else if(DefaultMethods.DELETE.equals(nameRequest)) {
 				Long idUser = Long.valueOf(request.getPathVariables().get(0));

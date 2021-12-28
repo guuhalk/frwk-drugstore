@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import com.msfinancial.converter.AccountFinancialInstituitionConverter;
@@ -38,53 +39,53 @@ public class AccountFinancialInstituitionConsumer {
 			if(DefaultMethods.GET_ALL.equals(nameRequest)) {
 				List<AccountFinancialInstituitionDTO> accountsDTO = accountConverter.toCollectionDto(accountService.getAll());
 				response.setBody(accountsDTO);
-				response.setResponseCode(200);
+				response.setResponseCode(HttpStatus.OK.value());
 
 			} else if(DefaultMethods.FIND_BY_ID.equals(nameRequest)) {
 				Long idAccount = Long.valueOf(request.getPathVariables().get(0));
 				response.setBody(accountConverter.toDto(accountService.findById(idAccount)));
-				response.setResponseCode(200);
+				response.setResponseCode(HttpStatus.OK.value());
 				
 			} else if(AccountFinancialInstituitionMethods.GET_ALL_BY_ID_USER.equals(nameRequest)) {
 				Long idUser = Long.valueOf(request.getPathVariables().get(0));
 				List<AccountFinancialInstituitionDTO> accountsDTO = accountConverter.toCollectionDto(accountService.getAllByIdUser(idUser));
 				response.setBody(accountsDTO);
-				response.setResponseCode(200);
+				response.setResponseCode(HttpStatus.OK.value());
 			
 			} else if(DefaultMethods.CREATE.equals(nameRequest)) {
 				AccountFinancialInstituitionDTO accountDTO = (AccountFinancialInstituitionDTO) request.getBody();
 				AccountFinancialInstituition account = accountService.create(accountConverter.toEntity(accountDTO));
 				accountDTO = accountConverter.toDto(account);
 				response.setBody(accountDTO);
-				response.setResponseCode(201);
+				response.setResponseCode(HttpStatus.CREATED.value());
 				
 			} else if(DefaultMethods.UPDATE.equals(nameRequest)) {
 				AccountFinancialInstituitionDTO accountDTO = (AccountFinancialInstituitionDTO) request.getBody();
 				Long idAccount = Long.valueOf(request.getPathVariables().get(0));
 				AccountFinancialInstituition account = accountService.update(idAccount, accountDTO);
 				response.setBody(accountConverter.toDto(account));
-				response.setResponseCode(200);
+				response.setResponseCode(HttpStatus.OK.value());
 				
 			} else if(DefaultMethods.DELETE.equals(nameRequest)) {
 				Long idAccount = Long.valueOf(request.getPathVariables().get(0));
 				accountService.remove(idAccount);
-				response.setResponseCode(204);
+				response.setResponseCode(HttpStatus.NO_CONTENT.value());
 			}
 			
 		} catch (EntityInUseException e) {
-			response.setResponseCode(409);
+			response.setResponseCode(HttpStatus.CONFLICT.value());
 			response.setBody(e.getMessage());
 		
 		} catch (EntityNotFoundException e) {
-			response.setResponseCode(404);
+			response.setResponseCode(HttpStatus.NOT_FOUND.value());
 			response.setBody(e.getMessage());
 		
 		} catch (GenericException e) {
-			response.setResponseCode(400);
+			response.setResponseCode(HttpStatus.BAD_REQUEST.value());
 			response.setBody(e.getMessage());
 		
 		} catch (Exception e) {
-			response.setResponseCode(500);
+			response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 			response.setBody(e.getMessage());
 		}
 		

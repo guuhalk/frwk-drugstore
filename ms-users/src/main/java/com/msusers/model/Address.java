@@ -1,7 +1,7 @@
 package com.msusers.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +9,9 @@ import lombok.Setter;
 @Getter 
 @Setter
 @Embeddable
-@Table(name = "tb_address")
 public class Address {
 
+	@Column(name = "postalCode", columnDefinition = "postalCode", table = "tb_user")
 	private String postalCode;
 	
 	private String street;

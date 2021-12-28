@@ -1,4 +1,4 @@
-package com.msinventory.consumer;
+package com.msorders.consumer;
 
 import java.util.List;
 
@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import com.msinventory.converter.CategoryConverter;
-import com.msinventory.model.Category;
-import com.msinventory.service.CategoryService;
+import com.msorders.converter.OrderConverter;
+import com.msorders.model.Order;
+import com.msorders.service.OrderService;
 import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
-import com.msschemas.dto.CategoryDTO;
+import com.msschemas.dto.OrderDTO;
 import com.msschemas.exception.EntityInUseException;
 import com.msschemas.exception.EntityNotFoundException;
 import com.msschemas.exception.GenericException;
@@ -20,15 +20,15 @@ import com.msschemas.model.Request;
 import com.msschemas.model.Response;
 
 @Component
-public class CategoryConsumer {
+public class OrderConsumer {
 
 	@Autowired
-	private CategoryConverter categoryConverter;
+	private OrderConverter orderConverter;
 	
 	@Autowired
-	private CategoryService categoryService;
+	private OrderService orderService;
 	
-	@RabbitListener(queues = RabbitMQConstants.QUEUE_CATEGORY)
+	@RabbitListener(queues = RabbitMQConstants.QUEUE_REQUESTS)
 	private Response consummer(Request request) {
 		Response response = new Response();
 		
@@ -36,35 +36,24 @@ public class CategoryConsumer {
 			String nameRequest = request.getNameRequest();
 			
 			if(DefaultMethods.GET_ALL.equals(nameRequest)) {
-				List<CategoryDTO> categoriesDTO = categoryConverter.toCollectionDto(categoryService.getAll());
-				response.setBody(categoriesDTO);
+				List<OrderDTO> ordersDTO = orderConverter.toCollectionDto(orderService.getAll());
+				response.setBody(ordersDTO);
 				response.setResponseCode(HttpStatus.OK.value());
 				
 			} else if(DefaultMethods.FIND_BY_ID.equals(nameRequest)) {
-				String idCategory = request.getPathVariables().get(0);
-				response.setBody(categoryConverter.toDto(categoryService.findById(idCategory)));
+				Long idOrder = Long.valueOf(request.getPathVariables().get(0));
+				response.setBody(orderConverter.toDto(orderService.findById(idOrder)));
 				response.setResponseCode(HttpStatus.OK.value());
 				
 			} else if(DefaultMethods.CREATE.equals(nameRequest)) {
-				CategoryDTO categoryDTO = (CategoryDTO) request.getBody();
-				categoryDTO = categoryConverter.toDto(categoryService.create(categoryConverter.toEntity(categoryDTO)));
-				response.setBody(categoryDTO);
+				OrderDTO orderDTO = (OrderDTO) request.getBody();
+				Order order = orderService.create(orderConverter.toEntity(orderDTO));
+				orderDTO = orderConverter.toDto(order);
+				response.setBody(orderDTO);
 				response.setResponseCode(HttpStatus.CREATED.value());
-				
-			} else if(DefaultMethods.UPDATE.equals(nameRequest)) {
-				CategoryDTO categoryDTO = (CategoryDTO) request.getBody();
-				String idCategory = request.getPathVariables().get(0);
-				Category category = categoryService.update(idCategory, categoryDTO);
-				response.setBody(categoryConverter.toDto(category));
-				response.setResponseCode(HttpStatus.OK.value());
-				
-			} else if(DefaultMethods.DELETE.equals(nameRequest)) {
-				String idCategory = request.getPathVariables().get(0);
-				categoryService.remove(idCategory);
-				response.setResponseCode(HttpStatus.NO_CONTENT.value());
 			}
-			
-		}  catch (EntityInUseException e) {
+		
+		} catch (EntityInUseException e) {
 			response.setResponseCode(HttpStatus.CONFLICT.value());
 			response.setBody(e.getMessage());
 		
@@ -80,7 +69,7 @@ public class CategoryConsumer {
 			response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 			response.setBody(e.getMessage());
 		}
-		
+			
 		return response;
 	}
 }

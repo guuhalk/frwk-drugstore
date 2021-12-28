@@ -1,10 +1,16 @@
+com/msschemas/dto/PasswordInputDTO.class
 com/msschemas/constants/DefaultMethods.class
+com/msschemas/dto/AccountFinancialInstituitionDTO.class
 com/msschemas/model/Request.class
 com/msschemas/dto/UserDTO.class
+com/msschemas/dto/OrderItemDTO.class
 com/msschemas/exception/EntityNotFoundException.class
 com/msschemas/exception/GenericException.class
 com/msschemas/exception/EntityInUseException.class
 com/msschemas/model/Response.class
+com/msschemas/dto/FinancialInstituitionDTO.class
+com/msschemas/constants/AccountFinancialInstituitionMethods.class
+com/msschemas/dto/OrderDTO.class
 com/msschemas/exception/EntityAlreadyExistsException.class
 com/msschemas/dto/UserWithPassWordDTO.class
 com/msschemas/model/enumeration/ProductStatus.class
@@ -13,4 +19,6 @@ com/msschemas/dto/AddressDTO.class
 com/msschemas/dto/DrugstoreDTO.class
 com/msschemas/dto/CategoryDTO.class
 com/msschemas/dto/ProductDTO.class
+com/msschemas/constants/UserMethods.class
+com/msschemas/model/enumeration/PaymentMethod.class
 com/msschemas/constants/RabbitMQConstants.class

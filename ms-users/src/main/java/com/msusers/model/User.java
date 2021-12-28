@@ -11,13 +11,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.msusers.model.enums.UserType;
@@ -56,24 +56,20 @@ public class User {
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(name = "userType")
 	private UserType userType;
 	
 	@Embedded
 	private Address address;
 	
 	@CreationTimestamp
-	@Column(nullable = false, columnDefinition = "timestamp")
+	@Column(nullable = false, columnDefinition = "timestamp", name = "createdAt")
 	private OffsetDateTime createdAt;
 	
-	@CreationTimestamp
-	@Column(nullable = false, columnDefinition = "timestamp")
+	@UpdateTimestamp
+	@Column(nullable = false, columnDefinition = "timestamp", name = "updatedAt")
 	private OffsetDateTime updatedAt;
 
-	@PreUpdate
-	public void preUpdate() {
-		updatedAt = OffsetDateTime.now();
-	}
-	
 	public boolean isNew() {
 		return id == null;
 	}

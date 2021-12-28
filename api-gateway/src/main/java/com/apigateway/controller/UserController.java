@@ -49,6 +49,14 @@ public class UserController {
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
+	@GetMapping("/{cpfUser}/cpf")
+	public ResponseEntity<?> findByCPF(@PathVariable String cpfUser) {
+		Request menssage = new Request(UserMethods.FIND_BY_CPF, Arrays.asList(cpfUser));
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+
+		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody @Valid UserWithPassWordDTO userWithPassWordDTO) {
 		Request menssage = new Request(DefaultMethods.CREATE, userWithPassWordDTO);

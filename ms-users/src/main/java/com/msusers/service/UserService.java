@@ -38,6 +38,11 @@ public class UserService {
 		return getOrThrowException(idUser);
 	}
 	
+	public User findByCpf(String cpfUser) {
+		return userRepository.findFirstByCpf(cpfUser)
+					.orElseThrow(() -> new EntityNotFoundException("User not found!"));
+	}
+	
 	public UserWithPassWordDTO getUserLogin(String cpf) {
 		Optional<User> userFound = userRepository.findFirstByCpf(cpf);
 		return userFound == null ? null : userConverter.toDtoWithPassWord(userFound.get());

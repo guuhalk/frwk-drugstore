@@ -1,0 +1,134 @@
+version: '1.0.0'
+services:
+  
+  mongodb_inventories:
+    image : mongo
+    container_name: mongodb_inventories
+    environment:
+    - PUID=1000
+    - PGID=1000
+    volumes:
+    - ./database:/data/db
+    ports:
+    - 27017:27017
+    restart: unless-stopped
+    expose:
+      - 27017
+      
+  drugstore_db:
+    container_name: drugstore_mysql8
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: drugstoredb
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysqldb_drugstores/database:/var/lib/mysql
+    expose:
+      - 3306
+    
+  orders_db:
+    container_name: orders_mysql8
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ordersb
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./mysql_orders/database:/var/lib/mysql
+    expose:
+      - 3307
+ 
+  users-db:
+    container_name: users_postgres
+    image: postgres:14.0
+    restart: always
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      APP_DB_USER: "root"
+      APP_DB_PASS: "root"
+      APP_DB_NAME: "userdb"
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./database:/var/lib/postgresql/data
+      - ./postgresdb_users/scripts:/docker-entrypoint-initdb.d/
+    expose:
+      - 5433
+
+  financials-db:
+    container_name: financials-postgres
+    image: postgres:14.0
+    restart: always
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      APP_DB_USER: "root"
+      APP_DB_PASS: "root"
+      APP_DB_NAME: "financialdb"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database:/var/lib/postgresql/data
+      - ./postgresdb_financials/scripts:/docker-entrypoint-initdb.d/
+    expose:
+      - 5432       
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    expose:
+      - 5672
+    volumes:
+      - ./dados:/var/lib/rabbitmq/
+    environment:
+      - RABBITMQ_DEFAULT_USER=ADMIN
+      - RABBITMQ_DEFAULT_PASS=123456
+
+  auth-server:
+    image: guuhalk/auth-server
+    container_name: auth-server
+    ports:
+      - 8081:8081
+
+  api-gateway:
+    depends_on:
+      - rabbitmq
+    image: guuhalk/api-gateway
+    container_name: api-gateway
+    ports:
+      - 8082:8082  
+  
+  ms-user:
+    image: guuhalk/ms-user
+    container_name: ms-user
+    ports:
+      - 8083:8083
+
+  ms-drugstores:
+    image: guuhalk/ms-drugstores
+    container_name: ms-drugstores
+    ports:
+      - 8084:8084
+      
+  ms-financial:
+    image: guuhalk/ms-financial
+    container_name: ms-financial
+    ports:
+      - 8085:8085     
+    
+  ms-inventory:
+    image: guuhalk/ms-inventory
+    container_name: ms-inventory
+    ports:
+      - 8086:8086

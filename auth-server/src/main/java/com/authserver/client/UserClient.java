@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.msschemas.dto.UserWithPassWordDTO;
 
-@FeignClient(value = "user", url="http://localhost:8083")
+@FeignClient(value = "user", url="http://ms-users:8087")
 public interface UserClient {
 
 	@PostMapping("/users")

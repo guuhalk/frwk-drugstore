@@ -1,13 +1,11 @@
 FROM openjdk:11
 
-RUN mkdir -p /frwldrugstore/apigateway/
+RUN mkdir -p /frwldrugstore/api-gateway/
 
 WORKDIR /frwldrugstore
 
-ENV API_NAME=api-gateway-1.0.0.jar
-
-COPY ${API_NAME} /frwldrugstore/apigateway/
+COPY ./target/api-gateway-1.0.0.jar /frwldrugstore/api-gateway/
 
 EXPOSE 8082
 
-ENTRYPOINT [ "java", "-jar", "/frwldrugstore/apigateway/api-gateway-1.0.0.jar" ]
+ENTRYPOINT [ "java", "-jar", "/frwldrugstore/api-gateway/api-gateway-1.0.0.jar" ]

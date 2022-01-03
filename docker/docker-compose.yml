@@ -13,6 +13,11 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=ADMIN
       - RABBITMQ_DEFAULT_PASS=123456
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - frwk-drug-app
 
@@ -23,7 +28,7 @@ services:
     - PUID=1000
     - PGID=1000
     volumes:
-    - ./mongo_inventories/database:/data/db
+    - ./mongodb_inventories/database:/data/db
     ports:
     - "27017:27017"
     restart: unless-stopped
@@ -42,7 +47,7 @@ services:
       - "3306"
     restart: unless-stopped
     volumes:
-      - ./mysql_drugstores/database:/var/lib/mysql
+      - ./mysqldb_drugstores/database:/var/lib/mysql
     networks:
       - frwk-drug-app
 
@@ -58,7 +63,7 @@ services:
       - "3306"
     restart: unless-stopped
     volumes:
-      - ./mysql_orders/database:/var/lib/mysql
+      - ./mysqldb_orders/database:/var/lib/mysql
     networks:
       - frwk-drug-app
 
@@ -80,8 +85,8 @@ services:
       - "5432"
     restart: unless-stopped
     volumes:
-      - ./postgres_users/database:/var/lib/postgresql/data
-      - ./postgres_users/scripts:/docker-entrypoint-initdb.d/
+      - ./postgresdb_users/database:/var/lib/postgresql/data
+      - ./postgresdb_users/scripts:/docker-entrypoint-initdb.d/
     networks:
       - frwk-drug-app
 
@@ -103,8 +108,8 @@ services:
       - "5432"
     restart: unless-stopped
     volumes:
-      - ./postgres_financials/database:/var/lib/postgresql/data
-      - ./postgres_financials/scripts:/docker-entrypoint-initdb.d/
+      - ./postgresdb_financials/database:/var/lib/postgresql/data
+      - ./postgresdb_financials/scripts:/docker-entrypoint-initdb.d/
     networks:
       - frwk-drug-app
 
@@ -120,9 +125,12 @@ services:
 
   api-gateway:
     depends_on:
-      - "rabbitmq"
+      - rabbitmq
+    links:
+      - rabbitmq
     image: danieldhsd/api-gateway
     container_name: api-gateway
+    restart: on-failure
     ports:
       - "8082:8082"
     networks:

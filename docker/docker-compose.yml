@@ -116,7 +116,7 @@ services:
   auth-server:
     depends_on:
       - "ms-users"
-    image: danieldhsd/auth-server
+    image: guuhalk/auth-server
     container_name: auth-server
     ports:
       - "8081:8081"
@@ -128,7 +128,7 @@ services:
       - rabbitmq
     links:
       - rabbitmq
-    image: danieldhsd/api-gateway
+    image: guuhalk/api-gateway
     container_name: api-gateway
     restart: on-failure
     ports:
@@ -140,7 +140,7 @@ services:
     depends_on:
       - "mysql_drugstores"
       - "api-gateway"
-    image: danieldhsd/ms-drugstores
+    image: guuhalk/ms-drugstores
     container_name: ms-drugstores
     ports:
       - "8083:8083"
@@ -151,7 +151,7 @@ services:
     depends_on:
       - "postgres_financials"
       - "api-gateway"
-    image: danieldhsd/ms-financial
+    image: guuhalk/ms-financial
     container_name: ms-financial
     ports:
       - "8084:8084"
@@ -162,7 +162,7 @@ services:
     depends_on:
       - "mongo_inventories"
       - "api-gateway"
-    image: danieldhsd/ms-inventory
+    image: guuhalk/ms-inventory
     container_name: ms-inventory
     ports:
       - "8085:8085"
@@ -173,7 +173,7 @@ services:
     depends_on:
       - "mysql_orders"
       - "api-gateway"
-    image: danieldhsd/ms-orders
+    image: guuhalk/ms-orders
     container_name: ms-orders
     ports:
       - "8086:8086"
@@ -184,7 +184,7 @@ services:
     depends_on:
       - "postgres_users"
       - "api-gateway"
-    image: danieldhsd/ms-users
+    image: guuhalk/ms-users
     container_name: ms-users
     ports:
       - "8087:8087"

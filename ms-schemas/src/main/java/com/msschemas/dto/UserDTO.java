@@ -25,6 +25,8 @@ public class UserDTO implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate birthday;
 	
+	private String photo;
+	
 	private String email;
 	
 	private UserType userType;

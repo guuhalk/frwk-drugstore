@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
 import com.msschemas.constants.UserMethods;
+import com.msschemas.dto.MultipartFileDTO;
 import com.msschemas.dto.PasswordInputDTO;
 import com.msschemas.dto.UserDTO;
 import com.msschemas.exception.EntityInUseException;
@@ -57,6 +58,13 @@ public class UserConsumer {
 				userDTO = userConverter.toDto(userService.create(userConverter.toEntity(userDTO)));
 				response.setBody(userDTO);
 				response.setResponseCode(HttpStatus.CREATED.value());
+				
+			} else if (UserMethods.SAVE_USER_PHOTO.equals(nameRequest)) {
+				MultipartFileDTO multipartFileDTO = (MultipartFileDTO) request.getBody();
+				Long idUser = Long.valueOf(request.getPathVariables().get(0));
+				UserDTO userDTO = userConverter.toDto(userService.savePhotoUser(multipartFileDTO, idUser));
+				response.setBody(userDTO);
+				response.setResponseCode(HttpStatus.OK.value());
 				
 			} else if(DefaultMethods.UPDATE.equals(nameRequest)) {
 				UserDTO userDTO = (UserDTO) request.getBody();

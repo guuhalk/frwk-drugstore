@@ -21,6 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.msschemas.model.enumeration.UserType;
+import com.msusers.util.FileUploadUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,6 +54,8 @@ public class User {
 	
 	private LocalDate birthday;
 	
+	private String photo;
+	
 	@Email
 	@NotBlank
 	private String email;
@@ -78,6 +81,12 @@ public class User {
 
 	public boolean isNew() {
 		return id == null;
+	}
+	
+	public String getPhoto() {
+		if(id == null || photo == null) return null;
+		
+		return FileUploadUtil.USER_PHOTO_BASE_PATH + id + "/" + photo;
 	}
 	
 }

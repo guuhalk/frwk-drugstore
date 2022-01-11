@@ -1,5 +1,6 @@
 package com.apigateway.controller;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import javax.validation.Valid;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.apigateway.service.RabbitMQService;
 import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
 import com.msschemas.constants.UserMethods;
+import com.msschemas.dto.MultipartFileDTO;
 import com.msschemas.dto.PasswordInputDTO;
 import com.msschemas.dto.UserDTO;
 import com.msschemas.dto.UserWithPassWordDTO;
@@ -38,7 +42,6 @@ public class UserController {
 		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
 
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
-
 	}
 	
 	@GetMapping("/{idUser}")
@@ -65,11 +68,21 @@ public class UserController {
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	
+	@PostMapping("/{idUser}/save-photo")
+	public ResponseEntity<?> savePhotoUser(@PathVariable Long idUser, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+		MultipartFileDTO multipartFileDTO = new MultipartFileDTO(multipartFile.getOriginalFilename(), multipartFile.getBytes());
+		
+		Request menssage = new Request(UserMethods.SAVE_USER_PHOTO, multipartFileDTO, Arrays.asList(idUser.toString()));
+		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
+		
+		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
+	}
+	
 	@PutMapping("/{idUser}")
 	public ResponseEntity<?> update(@PathVariable Long idUser, @RequestBody @Valid UserDTO userDto) {
 		Request menssage = new Request(DefaultMethods.UPDATE, userDto, Arrays.asList(idUser.toString()));
 		Response response = this.rabbitMqService.sendMenssage(RabbitMQConstants.QUEUE_USER, menssage);
-	
+		
 		return ResponseEntity.status(response.getResponseCode()).body(response.getBody());
 	}
 	

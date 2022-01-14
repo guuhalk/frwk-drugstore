@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.msorders.converter.OrderConverter;
 import com.msorders.model.Order;
+import com.msorders.service.OrderProducerService;
 import com.msorders.service.OrderService;
 import com.msschemas.constants.DefaultMethods;
 import com.msschemas.constants.RabbitMQConstants;
@@ -27,6 +28,9 @@ public class OrderConsumer {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private OrderProducerService orderProducerService;
 	
 	@RabbitListener(queues = RabbitMQConstants.QUEUE_REQUESTS)
 	private Response consummer(Request request) {
@@ -49,8 +53,11 @@ public class OrderConsumer {
 				OrderDTO orderDTO = (OrderDTO) request.getBody();
 				Order order = orderService.create(orderConverter.toEntity(orderDTO));
 				orderDTO = orderConverter.toDto(order);
+				
 				response.setBody(orderDTO);
 				response.setResponseCode(HttpStatus.CREATED.value());
+				
+				orderProducerService.sendMessage(orderDTO);
 			}
 		
 		} catch (EntityInUseException e) {

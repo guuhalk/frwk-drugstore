@@ -26,7 +26,7 @@ public class OrderItemDTO implements Serializable {
 	private String observation;
 	
 	@NotNull
-	private Long productId;
+	private String productId;
 	
 	private OrderDTO orderimpl;
 }

@@ -1,5 +1,6 @@
 package com.apigateway.config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -26,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		//.antMatchers(HttpMethod.POST, "/login")
 		//.permitAll()
+		.antMatchers(HttpMethod.POST, "/users")
+		.permitAll()
 		.anyRequest()
 		.authenticated()
 		.and()
@@ -35,6 +38,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().cors();
 	}
-	
 	
 }

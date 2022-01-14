@@ -62,8 +62,6 @@ public class OrderService {
 		
 		updateInventoryQuantityFromProducts();
 		
-		//TODO: Avisar equipe do C# sobre a compra
-		
 		return order;
 	}
 	
@@ -123,7 +121,7 @@ public class OrderService {
 	
 	private void setOrderDrugstore(Order order) {
 		Response response = mqService.sendMenssage(RabbitMQConstants.QUEUE_PHARMACIES, 
-						new Request(DefaultMethods.FIND_BY_ID, Arrays.asList(order.getDrugstoreId())));
+						new Request(DefaultMethods.FIND_BY_ID, Arrays.asList(order.getDrugstoreId().toString())));
 
 		if(!response.getResponseCode().equals(200)) {
 			throw new EntityNotFoundException("Drugstore not found");

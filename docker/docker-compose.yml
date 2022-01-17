@@ -46,8 +46,8 @@ services:
     volumes:
       - ./rabbitmq/dados:/var/lib/rabbitmq/
     environment:
-      - RABBITMQ_DEFAULT_USER=ADMIN
-      - RABBITMQ_DEFAULT_PASS=123456
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:15672"]
       interval: 30s
@@ -153,6 +153,7 @@ services:
       - "ms-users"
     image: danieldhsd/auth-server
     container_name: auth-server
+    restart: on-failure
     ports:
       - "8081:8081"
     networks:
@@ -211,6 +212,7 @@ services:
     depends_on:
       - "mysql_orders"
       - "api-gateway"
+      - "kafka"
     image: danieldhsd/ms-orders
     container_name: ms-orders
     restart: on-failure

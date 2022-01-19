@@ -21,13 +21,19 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.br.CNPJ;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "tb_drugstore")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Setter
 public class Drugstore {
@@ -47,19 +53,21 @@ public class Drugstore {
 	@Email
 	private String email;
 	
+	@Builder.Default
 	@ElementCollection
 	@CollectionTable(name = "drugstore_phones", joinColumns = @JoinColumn(name = "drugstore_id"))
+	@Column(name = "phone")
 	private List<String> phones = new ArrayList<>();
 	
 	@Embedded
 	private Address address;
 	
 	@CreationTimestamp
-	@Column(nullable = false, columnDefinition = "timestamp")
+	@Column(nullable = false, columnDefinition = "timestamp", name = "created_at")
 	private OffsetDateTime createdAt;
 	
 	@UpdateTimestamp
-	@Column(nullable = false, columnDefinition = "timestamp")
+	@Column(nullable = false, columnDefinition = "timestamp", name = "updated_at")
 	private OffsetDateTime updatedAt;
 
 }
